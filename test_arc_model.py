@@ -73,25 +73,38 @@ def main():
     # Load model
     model = load_trained_model()
     
-    # Find test tasks
-    tasks = find_arc_tasks()
-    
-    if not tasks:
-        print("No tasks found for testing. Using synthetic examples instead.")
-        # Create synthetic examples for testing
-        tasks = [{
-            'train_input': np.array([[0, 0, 0], [0, 1, 0], [0, 0, 0]]),
-            'train_output': np.array([[0, 1, 0], [1, 1, 1], [0, 1, 0]]),
-            'test_input': np.array([[0, 0, 0, 0], [0, 2, 2, 0], [0, 0, 0, 0]]),
-            'test_output': np.array([[0, 2, 2, 0], [2, 2, 2, 2], [0, 2, 2, 0]]),
-            'file_path': "synthetic_example_1"
-        }, {
-            'train_input': np.array([[1, 2], [3, 4]]),
-            'train_output': np.array([[4, 3], [2, 1]]),
-            'test_input': np.array([[5, 6], [7, 8]]),
-            'test_output': np.array([[8, 7], [6, 5]]),
-            'file_path': "synthetic_example_2"
-        }]
+    # Use synthetic examples for testing
+    tasks = [{
+        'train_input': np.array([[1, 2], [3, 4]]),
+        'train_output': np.array([[4, 3], [2, 1]]),  # rotate_180
+        'test_input': np.array([[5, 6], [7, 8]]),
+        'test_output': np.array([[8, 7], [6, 5]]),
+        'file_path': "synthetic_example_1_rotate_180"
+    }, {
+        'train_input': np.array([[1, 2], [3, 4]]),
+        'train_output': np.array([[2, 4], [1, 3]]),  # rotate_90
+        'test_input': np.array([[5, 6], [7, 8]]),
+        'test_output': np.array([[6, 8], [5, 7]]),
+        'file_path': "synthetic_example_2_rotate_90"
+    }, {
+        'train_input': np.array([[1, 2], [3, 4]]),
+        'train_output': np.array([[3, 1], [4, 2]]),  # rotate_270
+        'test_input': np.array([[5, 6], [7, 8]]),
+        'test_output': np.array([[7, 5], [8, 6]]),
+        'file_path': "synthetic_example_3_rotate_270"
+    }, {
+        'train_input': np.array([[1, 2], [3, 4]]),
+        'train_output': np.array([[2, 1], [4, 3]]),  # flip_horizontal
+        'test_input': np.array([[5, 6], [7, 8]]),
+        'test_output': np.array([[6, 5], [8, 7]]),
+        'file_path': "synthetic_example_4_flip_horizontal"
+    }, {
+        'train_input': np.array([[0, 0, 0], [0, 0, 0], [1, 1, 1]]),
+        'train_output': np.array([[1, 1, 1], [0, 0, 0], [0, 0, 0]]),  # move_up (2 times)
+        'test_input': np.array([[0, 0, 0], [0, 0, 0], [2, 2, 2]]),
+        'test_output': np.array([[2, 2, 2], [0, 0, 0], [0, 0, 0]]),
+        'file_path': "synthetic_example_5_move_up"
+    }]
     
     # Test each task
     correct = 0
